@@ -193,3 +193,11 @@ def partition_bbox(
             partition = (lon, lat, min(lon + width, bbox[2]), min(lat + height, bbox[3]))
             partitions.append(partition)
     return partitions
+
+
+def get_edl_bearer_token(endpoint: str = 'https://uat.urs.earthdata.nasa.gov') -> str:
+    url = endpoint + '/api/users/find_or_create_token'
+    auth = (os.environ['EARTHDATA_USERNAME'], os.environ['EARTHDATA_PASSWORD'])
+    response = requests.get(url, auth=auth)
+    response.raise_for_status()
+    return response.json()['access_token']

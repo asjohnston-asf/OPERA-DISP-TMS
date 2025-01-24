@@ -3,6 +3,8 @@ from datetime import datetime
 
 import requests
 
+from opera_disp_tms import utils
+
 
 CMR_DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
@@ -74,7 +76,7 @@ def get_cmr_metadata(
         'attribute[]': [f'int,FRAME_NUMBER,{frame_id}', f'float,PRODUCT_VERSION,{version},'],
         'page_size': 2000,
     }
-    headers = {}
+    headers = {'Authorization': f'Bearer {utils.get_edl_bearer_token()}'}
     items = []
 
     while True:
